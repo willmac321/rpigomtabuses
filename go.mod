@@ -9,3 +9,5 @@ require (
 	periph.io/x/devices/v3 v3.7.1
 	periph.io/x/host/v3 v3.8.2
 )
+
+require github.com/joho/godotenv v1.5.1 // indirect
