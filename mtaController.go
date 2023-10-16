@@ -104,12 +104,16 @@ func compileBusFacts() []string {
 	}
 	for _, stop := range stops_on_lines.Data.Stops {
 		for _, route := range stop.Routes {
-			pT1, _ := time.Parse("2006-01-02T15:04:05.000-07:00", route.Buses[0].AimedArrivalTime)
-			if len(route.Buses) > 1 {
-				pT2, _ := time.Parse("2006-01-02T15:04:05.000-07:00", route.Buses[1].AimedArrivalTime)
-				rv = append(rv, fmt.Sprintf("%s %s -> %s %s @ %s S:%d & %s S:%d", stop.Name, stop.Direction, route.ShortName, route.LongName, pT1.Format("15:04"), route.Buses[0].StopsFromCall, pT2.Format("15:04"), route.Buses[1].StopsFromCall))
+			if len(route.Buses) > 0 {
+				pT1, _ := time.Parse("2006-01-02T15:04:05.000-07:00", route.Buses[0].AimedArrivalTime)
+				if len(route.Buses) > 1 {
+					pT2, _ := time.Parse("2006-01-02T15:04:05.000-07:00", route.Buses[1].AimedArrivalTime)
+					rv = append(rv, fmt.Sprintf("%s %s -> %s %s @ %s S:%d & %s S:%d", stop.Name, stop.Direction, route.ShortName, route.LongName, pT1.Format("15:04"), route.Buses[0].StopsFromCall, pT2.Format("15:04"), route.Buses[1].StopsFromCall))
+				} else {
+					rv = append(rv, fmt.Sprintf("%s %s -> %s %s @ %s S:%d", stop.Name, stop.Direction, route.ShortName, route.LongName, pT1.Format("15:04"), route.Buses[0].StopsFromCall))
+				}
 			} else {
-				rv = append(rv, fmt.Sprintf("%s %s -> %s %s @ %s S:%d", stop.Name, stop.Direction, route.ShortName, route.LongName, pT1.Format("15:04"), route.Buses[0].StopsFromCall))
+				rv = append(rv, fmt.Sprintf("%s %s -> %s %s @ no bus, sadness overwhelms me :(", stop.Name, stop.Direction, route.ShortName, route.LongName))
 			}
 		}
 	}
