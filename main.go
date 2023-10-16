@@ -64,7 +64,7 @@ func main() {
 	go func() {
 		defer wg.Done()
 		log.Println("1 Hour start")
-		time.Sleep(1 * time.Second)
+		time.Sleep(3600 * time.Second)
 		// signal done to other goroutine
 		done <- true
 		log.Println("1 Hour completed")
