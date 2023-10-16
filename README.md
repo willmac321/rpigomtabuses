@@ -9,7 +9,7 @@ I want to add a way to find the closest bus stops by geolocation, however the on
 
 ## Video!
 <figure class="video_container">
-  <iframe src="output.mp4" frameborder="0" allowfullscreen="true"> 
+  <iframe src="./output.mp4" frameborder="0" allowfullscreen="true"> 
 </iframe>
 </figure>
 
