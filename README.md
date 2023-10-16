@@ -3,6 +3,21 @@
 Goal is to pick two closest bus lines and the status of the closes outward and inward bound buses on each line.  MTA bus lines picked are those nearest to your gelocation on app start
 
 
+## Build
+```
+go build
+./rpigomtabuses
+```
+run the binary to see the output, recompile after updating the env!
+
+I also included an example service file for systemd, can be used by copying to 
+`/etc/systemd/system/bus-routes-app.service`
+then
+```
+sudo systemctl daemon-reload
+sudo systemctl enable bus-routes-app
+sudo systemctl start bus-routes-app
+```
 
 ## Getting started
 uses golang!

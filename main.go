@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os/exec"
 	"time"
 )
 
@@ -44,5 +45,6 @@ func main() {
 	dispose(displayController)
 
 	// lets turn the rpi0 after an hour of showing bus routes and let it rest
-
+	cmd := exec.Command("shutdown", "-h", "now")
+	cmd.Run()
 }

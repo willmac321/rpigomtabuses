@@ -7,7 +7,7 @@ Type=simple
 User=root
 Group=root
 WorkingDirectory=/home/will/rpiGoMtaBuses
-ExecStart=/usr/local/go/bin/go run .
+ExecStart=/home/will/rpiGoMtaBuses/rpigomtabuses
 Restart=on-failure
 RestartSec=5
 
