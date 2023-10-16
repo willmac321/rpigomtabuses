@@ -4,7 +4,8 @@ import (
 	"context"
 	"log"
 	"os"
-	"os/exec"
+
+	// "os/exec"
 	"os/signal"
 	"sync"
 	"syscall"
@@ -35,8 +36,8 @@ func main() {
 	var wg sync.WaitGroup
 
 	displayController = create()
+	done := make(chan bool)
 
-	start := time.Now()
 	ticker := time.NewTicker(60 * time.Second)
 
 	doStuff()
@@ -47,25 +48,25 @@ func main() {
 		for {
 			select {
 			case <-ctx.Done():
+			case <-done:
+				log.Println("Disposing Controller")
 				dispose(displayController)
 				return
-			case c := <-ticker.C:
-				if c.Sub(start).Seconds() > 60 {
-					ticker.Stop()
-					break
-				}
+			case <-ticker.C:
 				doStuff()
 			}
 		}
 	}()
 
 	wg.Add(1)
+	// this goroutine could be moved into the other worker and done via a timestamp calc on that loop, but wanted to look at signalling for goroutines
 	go func() {
 		defer wg.Done()
-		select {
-		case <-time.After(1 * time.Minute):
-			return
-		}
+		log.Println("1 Hour start")
+		time.Sleep(1 * time.Second)
+		// signal done to other goroutine
+		done <- true
+		log.Println("1 Hour completed")
 	}()
 
 	wg.Wait()

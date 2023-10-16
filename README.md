@@ -1,6 +1,13 @@
 # rpiGoMtaBuses
 
-Goal is to pick two closest bus lines and the status of the closes outward and inward bound buses on each line.  MTA bus lines picked are those nearest to your gelocation on app start
+Goal is to pick two closest bus lines and the status of the closest outward and inward bound buses on each line.  MTA bus lines picked are those nearest to the lat long supplied in the env at compile time.
+
+
+### Future work
+I want to add a way to find the closest bus stops by geolocation, however the only available api's are paid or require more raspberry pi hardware.  So going to mark that as future work for now.
+
+
+## Gif
 
 
 ## Build
