@@ -1,0 +1,15 @@
+[Unit]
+Description=Run an app that pings MTA for a few buses and bus route status near me
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/home/will/rpiGoMtaBuses
+ExecStart=/usr/local/go/bin/go run .
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -18,7 +18,6 @@ import (
 type DisplayController struct {
 	Dev    *ssd1306.Dev
 	Drawer *font.Drawer
-	Img    *image1bit.VerticalLSB
 }
 
 var (
@@ -38,9 +37,11 @@ func clear(dc *DisplayController) {
 func drawBusKeepOn(dc *DisplayController) {
 	clear(dc)
 
+	dc.Dev.SetDisplayStartLine(0)
+
 	f := basicfont.Face7x13
 
-	img := image1bit.NewVerticalLSB(image.Rect(0, 0, screenW, screenH))
+	img := image1bit.NewVerticalLSB(image.Rect(0, 0, screenW*2, screenH))
 
 	drawer := font.Drawer{
 		Dst:  img,
@@ -68,7 +69,9 @@ func drawBusKeepOn(dc *DisplayController) {
 		log.Fatal(err)
 	}
 
-	dc.Dev.Scroll(ssd1306.Left, ssd1306.FrameRate3, 0, screenW)
+	if err := dc.Dev.Scroll(ssd1306.Left, ssd1306.FrameRate2, 0, screenH); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func startLoading(dc *DisplayController) {
@@ -106,6 +109,7 @@ func splitStr(str string, dc *DisplayController) []string {
 }
 
 func drawMessage(newStr []string, dc *DisplayController, wait int) {
+	dc.Drawer.Dst = image1bit.NewVerticalLSB(image.Rect(0, 0, screenW, screenH*2))
 	dY := 9
 
 	for len(newStr) > 0 {
@@ -119,16 +123,18 @@ func drawMessage(newStr []string, dc *DisplayController, wait int) {
 		}
 	}
 
-	if err := dc.Dev.Draw(dc.Img.Bounds(), dc.Img, image.Point{}); err != nil {
+	newY := uint8(0)
+	dc.Dev.SetDisplayStartLine(newY)
+
+	if err := dc.Dev.Draw(dc.Drawer.Dst.Bounds(), dc.Drawer.Dst, image.Point{}); err != nil {
 		log.Fatal(err)
 	}
 
 	i := 0
-	newY := uint8(0)
+	time.Sleep(500 * time.Millisecond)
 
 	for i < wait {
-
-		if dY > dc.Dev.Bounds().Dy() {
+		if dY > screenH {
 			dc.Dev.SetDisplayStartLine(newY)
 			newY = (newY + 1) % 64
 		}
@@ -158,18 +164,15 @@ func create() *DisplayController {
 		log.Fatal(err)
 	}
 
-	img := image1bit.NewVerticalLSB(image.Rect(0, 0, screenW, screenH*2))
-
 	f := basicfont.Face7x13
 
 	drawer := &font.Drawer{
-		Dst:  img,
 		Src:  &image.Uniform{image1bit.On},
 		Face: f,
 		// init offset
 		Dot: fixed.P(0, 0),
 	}
-	return &DisplayController{dev, drawer, img}
+	return &DisplayController{dev, drawer}
 }
 
 func dispose(dc *DisplayController) {
