@@ -7,7 +7,11 @@ Goal is to pick two closest bus lines and the status of the closest outward and 
 I want to add a way to find the closest bus stops by geolocation, however the only available api's are paid or require more raspberry pi hardware.  So going to mark that as future work for now.
 
 
-## Gif
+## Video!
+<figure class="video_container">
+  <iframe src="output.mp4" frameborder="0" allowfullscreen="true"> 
+</iframe>
+</figure>
 
 
 ## Build
