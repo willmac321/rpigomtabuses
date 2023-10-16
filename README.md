@@ -8,7 +8,7 @@ I want to add a way to find the closest bus stops by geolocation, however the on
 
 
 ## Video!
-[link to video in repo](gitlab.com/willmac321/rpigomtabuses/-/blob/main/output.mp4)
+[link to video in repo](https://gitlab.com/willmac321/rpigomtabuses/-/blob/dfc7521d6eb3dd4ec36884b0ce4d7a0be2ac7fca/output.mp4)
 
 
 ## Build
