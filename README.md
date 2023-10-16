@@ -8,10 +8,7 @@ I want to add a way to find the closest bus stops by geolocation, however the on
 
 
 ## Video!
-<figure class="video_container">
-  <iframe src="output.mp4" frameborder="0" allowfullscreen="true"> 
-</iframe>
-</figure>
+[link to video in repo](gitlab.com/willmac321/rpigomtabuses/output.mp4)
 
 
 ## Build
